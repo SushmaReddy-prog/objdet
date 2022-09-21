@@ -1,4 +1,5 @@
 img = "";
+status1 = "";
 
 function preload()
 {
@@ -9,6 +10,8 @@ function setup()
 {
     canvas = createCanvas(640, 420);
     canvas.center();
+    objectDetector = ml5.objectDetector('cocossd', modelLoaded);
+    document.getElementById("status").innerHTML = "Statusc: Detecting Objects";
 }
 
 function draw()
@@ -25,4 +28,19 @@ function draw()
     noFill();
     stroke("#FFC0CB");
     rect(300, 90, 270, 320);
+}
+
+function modelLoaded()
+{
+    console.log("Model Loaded!")
+    status1 = true;
+    objectDetector.detect(img, gotResult);
+}
+
+function gotResult(error, results) 
+{
+    if (error) {
+        console.log(error);
+    }
+    console.log(results);
 }
